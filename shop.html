@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магазин</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: var(--tg-theme-bg-color);
+            color: var(--tg-theme-text-color);
+            margin: 0;
+            padding: 16px;
+        }
+        .product {
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .product img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .product h3 { margin: 0 0 6px; }
+        .product p { margin: 0; color: gray; font-size: 14px; }
+        .price { font-size: 18px; font-weight: bold; color: #2ea44f; }
+        button {
+            margin-top: 8px;
+            padding: 8px 16px;
+            background: #2ea44f;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>🛍️ Наши товары</h2>
+
+    <div class="product">
+        <img src="https://via.placeholder.com/80" alt="Товар 1">
+        <div>
+            <h3>Товар 1</h3>
+            <p>Описание товара</p>
+            <div class="price">1500 сум</div>
+            <button onclick="order('Товар 1', 1500)">Заказать</button>
+        </div>
+    </div>
+
+    <div class="product">
+        <img src="https://via.placeholder.com/80" alt="Товар 2">
+        <div>
+            <h3>Товар 2</h3>
+            <p>Описание товара</p>
+            <div class="price">2500 сум</div>
+            <button onclick="order('Товар 2', 2500)">Заказать</button>
+        </div>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        function order(name, price) {
+            tg.sendData(JSON.stringify({ product: name, price: price }));
+        }
+    </script>
+</body>
+</html>
