@@ -25,6 +25,15 @@ def products_by_category(cat_id):
         'id': p[0], 'name': p[1], 'price': p[2],
         'description': p[3], 'photo_id': p[4], 'category_id': p[5]
     } for p in prods])
+import httpx
 
+@app.route('/photo/<photo_id>')
+async def get_photo(photo_id):
+    TOKEN = "твой_токен"
+    async with httpx.AsyncClient() as client:
+        r = await client.get(f"https://api.telegram.org/bot{TOKEN}/getFile?file_id={photo_id}")
+        file_path = r.json()['result']['file_path']
+        img = await client.get(f"https://api.telegram.org/file/bot{TOKEN}/{file_path}")
+        return img.content, 200, {'Content-Type': 'image/jpeg'}
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000)
